@@ -136,22 +136,10 @@ async function listCustomers(
     );
   }
 
-  const page = Math.max(DEFAULT_PAGE, params.page ?? DEFAULT_PAGE);
-
   const pageSize = Math.min(
     MAX_PAGE_SIZE,
     Math.max(1, params.pageSize ?? DEFAULT_PAGE_SIZE),
   );
-
-  if (params.scenario === "empty") {
-    return {
-      data: [],
-      page,
-      pageSize,
-      totalItems: 0,
-      totalPages: 0,
-    };
-  }
 
   const normalizedQuery = params.query?.trim().toLowerCase() ?? "";
 
@@ -186,8 +174,23 @@ async function listCustomers(
       compareCustomers(first, second, sortBy) * directionMultiplier,
   );
 
+  const requestedPage = Math.max(DEFAULT_PAGE, params.page ?? DEFAULT_PAGE);
+
   const totalItems = filteredCustomers.length;
   const totalPages = Math.ceil(totalItems / pageSize);
+
+  const page =
+    totalPages === 0 ? DEFAULT_PAGE : Math.min(requestedPage, totalPages);
+
+  if (params.scenario === "empty") {
+    return {
+      data: [],
+      page,
+      pageSize,
+      totalItems: 0,
+      totalPages: 0,
+    };
+  }
 
   const startIndex = (page - 1) * pageSize;
 

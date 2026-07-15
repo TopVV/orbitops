@@ -1,8 +1,15 @@
 "use client";
 
-import { useMemo, useState } from "react";
 import Link from "next/link";
+import { useEffect, useMemo, useState } from "react";
 
+import { CustomersFilters } from "@/features/customers/components/CustomersFilters";
+import { useCustomerListUrlState } from "@/features/customers/hooks/use-customer-list-url-state";
+import type {
+  CustomerListParams,
+  CustomerSortField,
+  SortDirection,
+} from "@/features/customers/types/customer";
 import AddRoundedIcon from "@mui/icons-material/AddRounded";
 import SearchOffRoundedIcon from "@mui/icons-material/SearchOffRounded";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
@@ -22,35 +29,91 @@ import {
   CustomersTableSkeleton,
 } from "@/features/customers/components/CustomersTable";
 import { useCustomers } from "@/features/customers/hooks/use-customers";
-import type { CustomerListParams } from "@/features/customers/types/customer";
 import { useDebouncedValue } from "@/shared/hooks/use-debounced-value";
 
 const PAGE_SIZE = 10;
 
-export function CustomersPageContent() {
-  const [searchValue, setSearchValue] = useState("");
+function getInitialSortDirection(field: CustomerSortField): SortDirection {
+  if (field === "monthlyRecurringRevenue") {
+    return "desc";
+  }
 
-  const [page, setPage] = useState(1);
+  return "asc";
+}
+
+export function CustomersPageContent() {
+  const { state, updateState, clearFilters, hasActiveFilters } =
+    useCustomerListUrlState();
+
+  const [searchValue, setSearchValue] = useState(state.query);
 
   const debouncedSearchValue = useDebouncedValue(searchValue);
 
+  useEffect(() => {
+    setSearchValue(state.query);
+  }, [state.query]);
+
+  useEffect(() => {
+    if (debouncedSearchValue === state.query) {
+      return;
+    }
+
+    updateState(
+      {
+        query: debouncedSearchValue || null,
+      },
+      {
+        resetPage: true,
+      },
+    );
+  }, [debouncedSearchValue, state.query, updateState]);
+
   const params = useMemo<CustomerListParams>(
     () => ({
-      query: debouncedSearchValue,
-      page,
+      query: state.query,
+      statuses: state.status ? [state.status] : undefined,
+      healthStatuses: state.healthStatus ? [state.healthStatus] : undefined,
+      segments: state.segment ? [state.segment] : undefined,
+
+      sortBy: state.sortBy,
+      sortDirection: state.sortDirection,
+
+      page: state.page,
       pageSize: PAGE_SIZE,
-      sortBy: "companyName",
-      sortDirection: "asc",
     }),
-    [debouncedSearchValue, page],
+    [state],
   );
 
   const { data, error, isError, isFetching, isPending, refetch } =
     useCustomers(params);
 
-  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchValue(event.target.value);
-    setPage(1);
+  useEffect(() => {
+    if (!data || data.page === state.page) {
+      return;
+    }
+
+    updateState({
+      page: data.page,
+    });
+  }, [data, state.page, updateState]);
+
+  const handleSortChange = (field: CustomerSortField) => {
+    const nextDirection =
+      state.sortBy === field
+        ? state.sortDirection === "asc"
+          ? "desc"
+          : "asc"
+        : getInitialSortDirection(field);
+
+    updateState(
+      {
+        sortBy: field,
+        sortDirection: nextDirection,
+      },
+      {
+        resetPage: true,
+      },
+    );
   };
 
   return (
@@ -106,35 +169,24 @@ export function CustomersPageContent() {
           />
         )}
 
-        <Box
-          sx={{
-            p: 2.5,
-            borderBottom: "1px solid",
-            borderColor: "divider",
-          }}
-        >
-          <TextField
-            value={searchValue}
-            onChange={handleSearchChange}
-            placeholder="Search company, domain, or contact"
-            aria-label="Search customers"
-            sx={{
-              width: {
-                xs: "100%",
-                sm: 360,
-              },
-            }}
-            slotProps={{
-              input: {
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <SearchRoundedIcon fontSize="small" color="action" />
-                  </InputAdornment>
-                ),
-              },
-            }}
-          />
-        </Box>
+        <CustomersFilters
+          searchValue={searchValue}
+          status={state.status}
+          healthStatus={state.healthStatus}
+          segment={state.segment}
+          hasActiveFilters={hasActiveFilters}
+          onSearchChange={setSearchValue}
+          onStatusChange={(status) =>
+            updateState({ status }, { resetPage: true })
+          }
+          onHealthStatusChange={(healthStatus) =>
+            updateState({ healthStatus }, { resetPage: true })
+          }
+          onSegmentChange={(segment) =>
+            updateState({ segment }, { resetPage: true })
+          }
+          onClear={clearFilters}
+        />
 
         {isPending && <CustomersTableSkeleton />}
 
@@ -185,7 +237,12 @@ export function CustomersPageContent() {
 
         {data && data.totalItems > 0 && (
           <>
-            <CustomersTable customers={data.data} />
+            <CustomersTable
+              customers={data.data}
+              sortBy={state.sortBy}
+              sortDirection={state.sortDirection}
+              onSortChange={handleSortChange}
+            />
 
             <TablePagination
               component="div"
@@ -194,7 +251,9 @@ export function CustomersPageContent() {
               rowsPerPage={data.pageSize}
               rowsPerPageOptions={[PAGE_SIZE]}
               onPageChange={(_, nextPage) => {
-                setPage(nextPage + 1);
+                updateState({
+                  page: nextPage + 1,
+                });
               }}
               onRowsPerPageChange={() => undefined}
             />

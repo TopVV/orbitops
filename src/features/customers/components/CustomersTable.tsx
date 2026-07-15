@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 
 import ArrowForwardRoundedIcon from "@mui/icons-material/ArrowForwardRounded";
@@ -15,14 +17,21 @@ import TableRow from "@mui/material/TableRow";
 import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
 
+import TableSortLabel from "@mui/material/TableSortLabel";
+
 import type {
   Customer,
   CustomerHealthStatus,
+  CustomerSortField,
   CustomerStatus,
+  SortDirection,
 } from "@/features/customers/types/customer";
 
 interface CustomersTableProps {
   customers: readonly Customer[];
+  sortBy: CustomerSortField;
+  sortDirection: SortDirection;
+  onSortChange: (field: CustomerSortField) => void;
 }
 
 const STATUS_COLORS: Record<CustomerStatus, ChipProps["color"]> = {
@@ -65,19 +74,92 @@ function getInitials(value: string): string {
     .join("");
 }
 
-export function CustomersTable({ customers }: CustomersTableProps) {
+interface SortableHeaderProps {
+  field: CustomerSortField;
+  label: string;
+  align?: "left" | "right";
+  sortBy: CustomerSortField;
+  sortDirection: SortDirection;
+  onSortChange: (field: CustomerSortField) => void;
+}
+
+function SortableHeader({
+  field,
+  label,
+  align = "left",
+  sortBy,
+  sortDirection,
+  onSortChange,
+}: SortableHeaderProps) {
+  const isActive = sortBy === field;
+
+  return (
+    <TableCell align={align} sortDirection={isActive ? sortDirection : false}>
+      <TableSortLabel
+        active={isActive}
+        direction={isActive ? sortDirection : "asc"}
+        onClick={() => onSortChange(field)}
+        sx={{
+          width: "100%",
+          justifyContent: align === "right" ? "flex-end" : "flex-start",
+        }}
+      >
+        {label}
+      </TableSortLabel>
+    </TableCell>
+  );
+}
+
+export function CustomersTable({
+  customers,
+  sortBy,
+  sortDirection,
+  onSortChange,
+}: CustomersTableProps) {
   return (
     <TableContainer>
       <Table aria-label="Customers" sx={{ minWidth: 1120 }}>
         <TableHead>
           <TableRow>
-            <TableCell>Customer</TableCell>
+            <SortableHeader
+              field="companyName"
+              label="Customer"
+              sortBy={sortBy}
+              sortDirection={sortDirection}
+              onSortChange={onSortChange}
+            />
+
             <TableCell>Status</TableCell>
-            <TableCell>Health</TableCell>
+
+            <SortableHeader
+              field="healthScore"
+              label="Health"
+              sortBy={sortBy}
+              sortDirection={sortDirection}
+              onSortChange={onSortChange}
+            />
+
             <TableCell>Plan</TableCell>
-            <TableCell align="right">MRR</TableCell>
+
+            <SortableHeader
+              field="monthlyRecurringRevenue"
+              label="MRR"
+              align="right"
+              sortBy={sortBy}
+              sortDirection={sortDirection}
+              onSortChange={onSortChange}
+            />
+
             <TableCell>Owner</TableCell>
-            <TableCell>Renewal</TableCell>
+
+            <SortableHeader
+              field="renewalDate"
+              label="Renewal"
+              sortBy={sortBy}
+              sortDirection={sortDirection}
+              onSortChange={onSortChange}
+            />
+
             <TableCell>Last activity</TableCell>
             <TableCell align="right" />
           </TableRow>
