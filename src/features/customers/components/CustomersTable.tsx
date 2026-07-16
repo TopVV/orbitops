@@ -19,6 +19,13 @@ import Typography from "@mui/material/Typography";
 
 import TableSortLabel from "@mui/material/TableSortLabel";
 
+import {
+  formatCurrency,
+  formatCustomerLabel,
+  formatDate,
+  getInitials,
+} from "@/features/customers/utils/customer-formatters";
+
 import type {
   Customer,
   CustomerHealthStatus,
@@ -64,14 +71,6 @@ function formatLabel(value: string): string {
     .split("-")
     .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
     .join(" ");
-}
-
-function getInitials(value: string): string {
-  return value
-    .split(" ")
-    .slice(0, 2)
-    .map((part) => part.charAt(0))
-    .join("");
 }
 
 interface SortableHeaderProps {
