@@ -1,5 +1,4 @@
-import Stack from "@mui/material/Stack";
-import Typography from "@mui/material/Typography";
+import { CustomerFormPageContent } from "@/features/customers/components/CustomerFormPageContent";
 
 interface EditCustomerPageProps {
   params: Promise<{
@@ -12,11 +11,5 @@ export default async function EditCustomerPage({
 }: EditCustomerPageProps) {
   const { customerId } = await params;
 
-  return (
-    <Stack spacing={0.5}>
-      <Typography variant="h1">Edit customer</Typography>
-
-      <Typography color="text.secondary">Customer ID: {customerId}</Typography>
-    </Stack>
-  );
+  return <CustomerFormPageContent mode="edit" customerId={customerId} />;
 }

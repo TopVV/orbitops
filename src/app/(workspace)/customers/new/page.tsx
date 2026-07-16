@@ -1,14 +1,5 @@
-import Stack from "@mui/material/Stack";
-import Typography from "@mui/material/Typography";
+import { CustomerFormPageContent } from "@/features/customers/components/CustomerFormPageContent";
 
 export default function CreateCustomerPage() {
-  return (
-    <Stack spacing={0.5}>
-      <Typography variant="h1">Add customer</Typography>
-
-      <Typography color="text.secondary">
-        Customer creation form will be implemented in a later step.
-      </Typography>
-    </Stack>
-  );
+  return <CustomerFormPageContent mode="create" />;
 }

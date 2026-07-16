@@ -11,6 +11,12 @@ import {
   getCustomerHealthStatus,
 } from "@/features/customers/utils/get-customer-health-status";
 
+import {
+  CUSTOMER_INDUSTRY_OPTIONS,
+  CUSTOMER_OWNER_OPTIONS,
+  CUSTOMER_REGION_OPTIONS,
+} from "@/features/customers/data/customer-form-options";
+
 const COMPANY_NAMES = [
   "Nova Analytics",
   "PulsePay",
@@ -45,47 +51,6 @@ const COMPANY_NAMES = [
   "Wavefront AI",
   "Mosaic Labs",
 ] as const;
-
-const INDUSTRIES = [
-  "Data & Analytics",
-  "Financial Services",
-  "Developer Tools",
-  "Cloud Infrastructure",
-  "Healthcare",
-  "E-commerce",
-  "Cybersecurity",
-  "Business Intelligence",
-] as const;
-
-const REGIONS = [
-  "North America",
-  "Europe",
-  "Asia Pacific",
-  "United Kingdom",
-] as const;
-
-const OWNERS = [
-  {
-    id: "owner-sarah-chen",
-    name: "Sarah Chen",
-    email: "sarah.chen@orbitops.io",
-  },
-  {
-    id: "owner-daniel-kim",
-    name: "Daniel Kim",
-    email: "daniel.kim@orbitops.io",
-  },
-  {
-    id: "owner-emma-wilson",
-    name: "Emma Wilson",
-    email: "emma.wilson@orbitops.io",
-  },
-  {
-    id: "owner-marcus-lee",
-    name: "Marcus Lee",
-    email: "marcus.lee@orbitops.io",
-  },
-] satisfies ReadonlyArray<CustomerOwner>;
 
 const CONTACTS = [
   ["Olivia Martin", "VP of Operations"],
@@ -225,9 +190,10 @@ function createCustomer(companyName: string, index: number): Customer {
     companyName,
     domain,
 
-    industry: INDUSTRIES[index % INDUSTRIES.length],
+    industry:
+      CUSTOMER_INDUSTRY_OPTIONS[index % CUSTOMER_INDUSTRY_OPTIONS.length],
     companySize: segmentConfiguration.companySize,
-    region: REGIONS[index % REGIONS.length],
+    region: CUSTOMER_REGION_OPTIONS[index % CUSTOMER_REGION_OPTIONS.length],
     segment,
 
     status,
@@ -249,7 +215,7 @@ function createCustomer(companyName: string, index: number): Customer {
     monthlyRecurringRevenue,
     renewalDate,
 
-    owner: OWNERS[index % OWNERS.length],
+    owner: CUSTOMER_OWNER_OPTIONS[index % CUSTOMER_OWNER_OPTIONS.length],
     primaryContact: createPrimaryContact(index, domain),
 
     openIssuesCount: healthScore < 60 ? 3 + (index % 4) : index % 3,
