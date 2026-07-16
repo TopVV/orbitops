@@ -12,6 +12,9 @@ import {
   SUBSCRIPTION_PLANS,
 } from "@/features/customers/types/customer";
 
+const DOMAIN_PATTERN =
+  /^(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z]{2,63}$/i;
+
 const requiredText = (label: string) =>
   z.string().trim().min(1, `${label} is required`);
 
@@ -20,8 +23,8 @@ export const customerFormSchema = z.object({
     .min(2, "Company name must contain at least 2 characters")
     .max(100, "Company name is too long"),
 
-  domain: requiredText("Domain").refine(
-    (value) => z.hostname().safeParse(value).success,
+  domain: requiredText("Domain").regex(
+    DOMAIN_PATTERN,
     "Enter a valid domain, for example acme.com",
   ),
 

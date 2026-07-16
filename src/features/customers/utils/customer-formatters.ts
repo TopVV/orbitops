@@ -10,6 +10,11 @@ const dateFormatter = new Intl.DateTimeFormat("en-US", {
   year: "numeric",
 });
 
+const CUSTOMER_LABELS: Record<string, string> = {
+  smb: "SMB",
+  "mid-market": "Mid-market",
+};
+
 export function formatCurrency(value: number): string {
   return currencyFormatter.format(value);
 }
@@ -19,10 +24,13 @@ export function formatDate(value: string): string {
 }
 
 export function formatCustomerLabel(value: string): string {
-  return value
-    .split("-")
-    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
-    .join(" ");
+  return (
+    CUSTOMER_LABELS[value] ??
+    value
+      .split("-")
+      .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+      .join(" ")
+  );
 }
 
 export function getInitials(value: string): string {
