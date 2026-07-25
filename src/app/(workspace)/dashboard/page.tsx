@@ -7,7 +7,7 @@ import Stack from "@mui/material/Stack";
 import { AtRiskCustomersCard } from "@/features/dashboard/components/AtRiskCustomersCard";
 import { HealthDistributionCard } from "@/features/dashboard/components/HealthDistributionCard";
 import { RecentActivityCard } from "@/features/dashboard/components/RecentActivityCard";
-
+import { MrrTrendCard } from "@/features/dashboard/components/MrrTrendCard";
 import { DashboardHeader } from "@/features/dashboard/components/DashboardHeader";
 import {
   KpiCard,
@@ -77,6 +77,7 @@ export default function DashboardPage() {
           <KpiCard key={item.label} {...item} />
         ))}
       </Box>
+      <MrrTrendCard />
       <Box
         sx={{
           display: "grid",
