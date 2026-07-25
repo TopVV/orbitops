@@ -4,6 +4,8 @@ OrbitOps is a responsive B2B SaaS customer operations dashboard for monitoring a
 
 Built as a focused portfolio project, it demonstrates production-oriented frontend architecture and realistic product workflows without requiring a backend.
 
+**[View the live demo](https://orbitops-pied.vercel.app/dashboard)**
+
 ![OrbitOps dashboard](docs/screenshots/dashboard-desktop.png)
 
 ## Product highlights

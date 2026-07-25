@@ -6,6 +6,8 @@ OrbitOps — B2B SaaS Customer Operations Dashboard
 
 ## Short description
 
+**Live demo:** https://orbitops-pied.vercel.app/dashboard
+
 I designed and built a responsive B2B SaaS operations dashboard with Next.js, React, TypeScript, and Material UI.
 
 OrbitOps helps customer success and operations teams monitor customer health, recurring revenue, renewals, and at-risk accounts from one workspace. It includes a data-rich dashboard, searchable customer table, account details, and reusable create/edit workflows.
