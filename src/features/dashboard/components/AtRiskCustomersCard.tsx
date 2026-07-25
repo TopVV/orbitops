@@ -42,7 +42,11 @@ export function AtRiskCustomersCard() {
             </Typography>
           </Stack>
 
-          <Button href="/customers" size="small">
+          <Button
+            href="/customers"
+            size="small"
+            sx={{ whiteSpace: "nowrap" }}
+          >
             View all
           </Button>
         </Stack>

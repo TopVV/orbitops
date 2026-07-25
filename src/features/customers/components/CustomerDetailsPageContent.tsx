@@ -487,7 +487,7 @@ export function CustomerDetailsPageContent({
 
               <DetailItem label="Email" value={customer.primaryContact.email} />
 
-              <DetailItem label="Account owner" value={customer.owner.email} />
+              <DetailItem label="Owner email" value={customer.owner.email} />
             </Stack>
           </CardContent>
         </Card>

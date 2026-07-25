@@ -71,6 +71,7 @@ export function MrrTrendCard() {
 
           <LineChart
             height={300}
+            skipAnimation
             margin={{
               top: 10,
               right: 20,
