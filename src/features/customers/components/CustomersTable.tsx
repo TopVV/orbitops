@@ -4,7 +4,6 @@ import Link from "next/link";
 
 import ArrowForwardRoundedIcon from "@mui/icons-material/ArrowForwardRounded";
 import Avatar from "@mui/material/Avatar";
-import Chip, { type ChipProps } from "@mui/material/Chip";
 import IconButton from "@mui/material/IconButton";
 import Skeleton from "@mui/material/Skeleton";
 import Stack from "@mui/material/Stack";
@@ -19,20 +18,17 @@ import Typography from "@mui/material/Typography";
 
 import TableSortLabel from "@mui/material/TableSortLabel";
 
-import {
-  formatCurrency,
-  formatCustomerLabel,
-  formatDate,
-  getInitials,
-} from "@/features/customers/utils/customer-formatters";
+import { getInitials } from "@/features/customers/utils/customer-formatters";
 
 import type {
   Customer,
-  CustomerHealthStatus,
   CustomerSortField,
-  CustomerStatus,
   SortDirection,
 } from "@/features/customers/types/customer";
+import {
+  CustomerHealthChip,
+  CustomerStatusChip,
+} from "@/features/customers/components/CustomerChips";
 
 interface CustomersTableProps {
   customers: readonly Customer[];
@@ -40,19 +36,6 @@ interface CustomersTableProps {
   sortDirection: SortDirection;
   onSortChange: (field: CustomerSortField) => void;
 }
-
-const STATUS_COLORS: Record<CustomerStatus, ChipProps["color"]> = {
-  trial: "primary",
-  active: "success",
-  paused: "warning",
-  churned: "default",
-};
-
-const HEALTH_COLORS: Record<CustomerHealthStatus, ChipProps["color"]> = {
-  healthy: "success",
-  "needs-attention": "warning",
-  "at-risk": "error",
-};
 
 const currencyFormatter = new Intl.NumberFormat("en-US", {
   style: "currency",
@@ -116,7 +99,14 @@ export function CustomersTable({
   onSortChange,
 }: CustomersTableProps) {
   return (
-    <TableContainer>
+    <TableContainer
+      sx={{
+        display: {
+          xs: "none",
+          md: "block",
+        },
+      }}
+    >
       <Table aria-label="Customers" sx={{ minWidth: 1120 }}>
         <TableHead>
           <TableRow>
@@ -209,22 +199,13 @@ export function CustomersTable({
               </TableCell>
 
               <TableCell>
-                <Chip
-                  size="small"
-                  color={STATUS_COLORS[customer.status]}
-                  label={formatLabel(customer.status)}
-                  variant="outlined"
-                />
+                <CustomerStatusChip status={customer.status} />
               </TableCell>
 
               <TableCell>
-                <Chip
-                  size="small"
-                  color={HEALTH_COLORS[customer.healthStatus]}
-                  label={`${customer.healthScore} · ${formatLabel(
-                    customer.healthStatus,
-                  )}`}
-                  sx={{ fontWeight: 600 }}
+                <CustomerHealthChip
+                  status={customer.healthStatus}
+                  score={customer.healthScore}
                 />
               </TableCell>
 

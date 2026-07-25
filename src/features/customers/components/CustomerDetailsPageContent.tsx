@@ -352,6 +352,12 @@ export function CustomerDetailsPageContent({
           href={`/customers/${customer.id}/edit`}
           variant="contained"
           startIcon={<EditRoundedIcon />}
+          sx={{
+            width: {
+              xs: "100%",
+              sm: "auto",
+            },
+          }}
         >
           Edit customer
         </Button>

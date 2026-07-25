@@ -12,17 +12,15 @@ import type {
 } from "@/features/customers/types/customer";
 import AddRoundedIcon from "@mui/icons-material/AddRounded";
 import SearchOffRoundedIcon from "@mui/icons-material/SearchOffRounded";
-import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 import Alert from "@mui/material/Alert";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
-import InputAdornment from "@mui/material/InputAdornment";
 import LinearProgress from "@mui/material/LinearProgress";
 import Stack from "@mui/material/Stack";
 import TablePagination from "@mui/material/TablePagination";
-import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
+import { CustomersMobileList } from "@/features/customers/components/CustomersMobileList";
 
 import {
   CustomersTable,
@@ -46,12 +44,13 @@ export function CustomersPageContent() {
     useCustomerListUrlState();
 
   const [searchValue, setSearchValue] = useState(state.query);
-
+  const [previousQuery, setPreviousQuery] = useState(state.query);
   const debouncedSearchValue = useDebouncedValue(searchValue);
 
-  useEffect(() => {
+  if (state.query !== previousQuery) {
+    setPreviousQuery(state.query);
     setSearchValue(state.query);
-  }, [state.query]);
+  }
 
   useEffect(() => {
     if (debouncedSearchValue === state.query) {
@@ -145,6 +144,12 @@ export function CustomersPageContent() {
           href="/customers/new"
           variant="contained"
           startIcon={<AddRoundedIcon />}
+          sx={{
+            width: {
+              xs: "100%",
+              sm: "auto",
+            },
+          }}
         >
           Add customer
         </Button>
@@ -243,6 +248,8 @@ export function CustomersPageContent() {
               sortDirection={state.sortDirection}
               onSortChange={handleSortChange}
             />
+
+            <CustomersMobileList customers={data.data} />
 
             <TablePagination
               component="div"

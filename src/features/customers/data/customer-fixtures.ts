@@ -1,7 +1,6 @@
 import type {
   Customer,
   CustomerContact,
-  CustomerOwner,
   CustomerSegment,
   CustomerStatus,
   SubscriptionPlan,

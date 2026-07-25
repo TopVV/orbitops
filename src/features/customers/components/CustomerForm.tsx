@@ -389,6 +389,12 @@ export function CustomerForm({
             href={cancelHref}
             variant="outlined"
             disabled={isPending}
+            sx={{
+              width: {
+                xs: "100%",
+                sm: "auto",
+              },
+            }}
           >
             Cancel
           </Button>
@@ -402,6 +408,12 @@ export function CustomerForm({
                 <CircularProgress size={16} color="inherit" />
               ) : undefined
             }
+            sx={{
+              width: {
+                xs: "100%",
+                sm: "auto",
+              },
+            }}
           >
             {isPending
               ? "Saving..."
