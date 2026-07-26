@@ -70,7 +70,7 @@ export function HealthDistributionCard() {
                     sx={{
                       height: 8,
                       borderRadius: 999,
-                      bgcolor: "#EEF2F6",
+                      bgcolor: "#EDE3CF",
 
                       "& .MuiLinearProgress-bar": {
                         borderRadius: 999,

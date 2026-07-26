@@ -55,7 +55,7 @@ export function AtRiskCustomersCard() {
           <Table
             size="small"
             aria-label="Customers requiring attention"
-            sx={{ minWidth: 640 }}
+            sx={{ width: "100%", tableLayout: "fixed" }}
           >
             <TableHead>
               <TableRow>
@@ -75,10 +75,7 @@ export function AtRiskCustomersCard() {
 
                 <TableCell
                   sx={{
-                    display: {
-                      xs: "none",
-                      xl: "table-cell",
-                    },
+                    display: "none",
                   }}
                 >
                   Owner
@@ -158,10 +155,7 @@ export function AtRiskCustomersCard() {
 
                   <TableCell
                     sx={{
-                      display: {
-                        xs: "none",
-                        xl: "table-cell",
-                      },
+                      display: "none",
                     }}
                   >
                     {customer.owner}

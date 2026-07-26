@@ -72,6 +72,7 @@ export function MrrTrendCard() {
           <LineChart
             height={300}
             skipAnimation
+            sx={{ "& .MuiAreaElement-root": { fillOpacity: 0.18 } }}
             margin={{
               top: 10,
               right: 20,

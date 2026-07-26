@@ -9,26 +9,26 @@ export const theme = createTheme({
     mode: "light",
 
     primary: {
-      main: "#635BFF",
-      dark: "#4F46E5",
-      light: "#818CF8",
+      main: "#C64B12",
+      dark: "#9A3412",
+      light: "#EA7A3B",
       contrastText: "#FFFFFF",
     },
 
     background: {
-      default: "#F7F8FA",
-      paper: "#FFFFFF",
+      default: "#FBF6EC",
+      paper: "#FFFBF3",
     },
 
     text: {
-      primary: "#111827",
-      secondary: "#667085",
+      primary: "#29261F",
+      secondary: "#756F61",
     },
 
-    divider: "#E5E7EB",
+    divider: "#E4D6BD",
 
     success: {
-      main: "#16A34A",
+      main: "#4D7C2F",
     },
 
     warning: {
@@ -36,7 +36,7 @@ export const theme = createTheme({
     },
 
     error: {
-      main: "#DC2626",
+      main: "#B33A2B",
     },
   },
 
@@ -44,20 +44,23 @@ export const theme = createTheme({
     fontFamily: "var(--font-inter, Arial), sans-serif",
 
     h1: {
+      fontFamily: 'Georgia, "Times New Roman", serif',
       fontSize: "2rem",
-      fontWeight: 700,
+      fontWeight: 500,
       lineHeight: 1.2,
       letterSpacing: "-0.025em",
     },
 
     h2: {
+      fontFamily: 'Georgia, "Times New Roman", serif',
       fontSize: "1.5rem",
-      fontWeight: 700,
+      fontWeight: 600,
       lineHeight: 1.3,
       letterSpacing: "-0.02em",
     },
 
     h3: {
+      fontFamily: 'Georgia, "Times New Roman", serif',
       fontSize: "1.125rem",
       fontWeight: 600,
       lineHeight: 1.4,
@@ -92,7 +95,7 @@ export const theme = createTheme({
       styleOverrides: {
         root: {
           minHeight: 40,
-          borderRadius: 8,
+          borderRadius: 6,
           paddingInline: 16,
         },
       },
@@ -110,8 +113,18 @@ export const theme = createTheme({
       styleOverrides: {
         root: {
           border: "1px solid",
-          borderColor: "#E5E7EB",
-          boxShadow: "0 1px 2px rgba(16, 24, 40, 0.04)",
+          borderColor: "#E4D6BD",
+          boxShadow: "0 1px 2px rgba(74, 55, 31, 0.035)",
+        },
+      },
+    },
+
+    MuiTableCell: {
+      styleOverrides: {
+        head: {
+          color: "#756F61",
+          backgroundColor: "#FBF4E8",
+          fontWeight: 650,
         },
       },
     },

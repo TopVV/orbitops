@@ -83,16 +83,15 @@ export default function DashboardPage() {
           display: "grid",
           gridTemplateColumns: {
             xs: "minmax(0, 1fr)",
-            lg: "minmax(280px, 4fr) minmax(0, 8fr)",
+            lg: "minmax(250px, 3fr) minmax(0, 5fr) minmax(300px, 4fr)",
           },
           gap: 3,
         }}
       >
         <HealthDistributionCard />
         <AtRiskCustomersCard />
+        <RecentActivityCard />
       </Box>
-
-      <RecentActivityCard />
     </Stack>
   );
 }

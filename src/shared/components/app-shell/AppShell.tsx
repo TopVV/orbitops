@@ -67,6 +67,7 @@ export function AppShell({ children }: AppShellProps) {
         display: "flex",
         flexDirection: "column",
         height: "100%",
+        "& .MuiDivider-root": { borderColor: "#3B3E2E" },
       }}
     >
       <Stack
@@ -126,14 +127,20 @@ export function AppShell({ children }: AppShellProps) {
                 sx={{
                   mb: 0.5,
                   borderRadius: 2,
-                  color: isActive ? "primary.main" : "text.secondary",
+                  color: isActive ? "#F5D58A" : "#D4CDBB",
 
                   "&.Mui-selected": {
-                    bgcolor: "rgba(99, 91, 255, 0.10)",
+                    bgcolor: "rgba(198, 75, 18, 0.18)",
+                    boxShadow: "inset 3px 0 0 #EA7A3B",
                   },
 
                   "&.Mui-selected:hover": {
-                    bgcolor: "rgba(99, 91, 255, 0.14)",
+                    bgcolor: "rgba(198, 75, 18, 0.24)",
+                  },
+
+                  "&:hover": {
+                    bgcolor: "rgba(255, 251, 243, 0.06)",
+                    color: "#FFF7E8",
                   },
                 }}
               >
@@ -169,13 +176,12 @@ export function AppShell({ children }: AppShellProps) {
       <Box sx={{ p: 2.5 }}>
         <Typography
           variant="caption"
-          color="text.secondary"
-          sx={{ display: "block", mb: 0.5 }}
+          sx={{ display: "block", mb: 0.5, color: "#A9A18F" }}
         >
           Workspace
         </Typography>
 
-        <Typography variant="body2" sx={{ fontWeight: 600 }}>
+        <Typography variant="body2" sx={{ fontWeight: 600, color: "#FFF7E8" }}>
           OrbitOps Demo
         </Typography>
       </Box>
@@ -206,6 +212,9 @@ export function AppShell({ children }: AppShellProps) {
           "& .MuiDrawer-paper": {
             width: DRAWER_WIDTH,
             boxSizing: "border-box",
+            bgcolor: "#25291E",
+            color: "#FFF7E8",
+            borderRightColor: "#3B3E2E",
           },
         }}
       >
@@ -225,7 +234,9 @@ export function AppShell({ children }: AppShellProps) {
           "& .MuiDrawer-paper": {
             width: DRAWER_WIDTH,
             boxSizing: "border-box",
-            borderRightColor: "divider",
+            bgcolor: "#25291E",
+            color: "#FFF7E8",
+            borderRightColor: "#3B3E2E",
           },
         }}
       >
@@ -256,7 +267,8 @@ export function AppShell({ children }: AppShellProps) {
             },
             borderBottom: "1px solid",
             borderColor: "divider",
-            bgcolor: "background.paper",
+            bgcolor: "rgba(255, 251, 243, 0.94)",
+            backdropFilter: "blur(12px)",
           }}
         >
           <Stack direction="row" sx={{ alignItems: "center" }} spacing={1}>
@@ -303,7 +315,8 @@ export function AppShell({ children }: AppShellProps) {
                 height: 36,
                 fontSize: 14,
                 fontWeight: 600,
-                bgcolor: "primary.main",
+                bgcolor: "#DCC9A2",
+                color: "#433A2B",
               }}
             >
               VT

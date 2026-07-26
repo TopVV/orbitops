@@ -9,6 +9,13 @@ body {
 
 body {
   margin: 0;
+  background: #fbf6ec;
+  color: #29261f;
+}
+
+::selection {
+  color: #7c2d12;
+  background: #fed7aa;
 }
 
 a {
