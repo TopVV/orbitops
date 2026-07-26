@@ -60,7 +60,6 @@ export const theme = createTheme({
     },
 
     h3: {
-      fontFamily: 'Georgia, "Times New Roman", serif',
       fontSize: "1.125rem",
       fontWeight: 600,
       lineHeight: 1.4,

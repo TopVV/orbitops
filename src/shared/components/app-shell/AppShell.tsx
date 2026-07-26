@@ -53,10 +53,6 @@ export function AppShell({ children }: AppShellProps) {
   const pathname = usePathname();
   const [isMobileDrawerOpen, setIsMobileDrawerOpen] = useState(false);
 
-  const activeNavigationItem = navigationItems.find((item) =>
-    isNavigationItemActive(pathname, item.href),
-  );
-
   const closeMobileDrawer = () => {
     setIsMobileDrawerOpen(false);
   };
@@ -93,7 +89,14 @@ export function AppShell({ children }: AppShellProps) {
           <HubRoundedIcon fontSize="small" />
         </Box>
 
-        <Typography variant="h3" component="span" sx={{ fontWeight: 700 }}>
+        <Typography
+          variant="h3"
+          component="span"
+          sx={{
+            fontFamily: 'Georgia, "Times New Roman", serif',
+            fontWeight: 700,
+          }}
+        >
           OrbitOps
         </Typography>
       </Stack>
@@ -285,9 +288,6 @@ export function AppShell({ children }: AppShellProps) {
               <MenuRoundedIcon />
             </IconButton>
 
-            <Typography variant="h3">
-              {activeNavigationItem?.label ?? "OrbitOps"}
-            </Typography>
           </Stack>
 
           <Stack direction="row" sx={{ alignItems: "center" }} spacing={1.5}>
