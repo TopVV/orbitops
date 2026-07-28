@@ -5,7 +5,7 @@ import { ThemeProvider } from "@mui/material/styles";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v16-appRouter";
 import { AppProviders } from "@/shared/providers/AppProviders";
 import { theme } from "@/theme/theme";
-
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
 
 const inter = Inter({
@@ -36,6 +36,7 @@ export default function RootLayout({ children }: Readonly<RootLayoutProps>) {
             <AppProviders>{children}</AppProviders>
           </ThemeProvider>
         </AppRouterCacheProvider>
+        <SpeedInsights />
       </body>
     </html>
   );
